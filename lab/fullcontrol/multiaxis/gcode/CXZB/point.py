@@ -29,12 +29,12 @@ class Point(BasePoint):
             if system_type == 'CXZB':
                 # calculate CXY as if B=0 first:
                 x_for_b0 = sqrt(model_point.x ** 2 + model_point.y ** 2)
-                c_for_b0 = 0 if x_system[0] == 0.0 else degrees(atan2(model_point.y, model_point.x))
+                c_for_b0 = 0.0 if x_for_b0 == 0.0 else -degrees(atan2(model_point.y, model_point.x))
                 z_for_b0 = model_point.z
                 
                 # now calculate offset of nozzle caused by B rotation:
-                x_offset_from_b = sin(radians(model_point.b)) * state.printer.b_offset_x
-                z_offset_from_b = -cos(radians(model_point.b)) * state.printer.b_offset_x
+                x_offset_from_b = sin(radians(model_point.b)) * state.printer.b_offset_z
+                z_offset_from_b = state.printer.b_offset_z - cos(radians(model_point.b)) * state.printer.b_offset_z
                 
                 # now apply offset to CXY
                 c_system = c_for_b0

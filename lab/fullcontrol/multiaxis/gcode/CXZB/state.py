@@ -33,18 +33,18 @@ class State(BaseModel):
         # initialize state based on the named-printer default initialization_data and initialization_data over-rides passed by designer in gcode_controls
 
         def first_CXZB_point(steps: list, fully_defined: bool = True) -> Point:
-            'return first Point in list. if the parameter fully_defined is true, return first Point with all c,x,z,b != None'
+            'return first Point in list. if the parameter fully_defined is true, return first Point with all x,y,z,b != None'
             if type(steps).__name__ == 'list':
                 for i in range(len(steps)):
                     if type(steps[i]).__name__ == 'Point':
                         if fully_defined:
-                            if steps[i].c != None and steps[i].x != None and steps[i].z != None and steps[i].b != None:
+                            if steps[i].x != None and steps[i].y != None and steps[i].z != None and steps[i].b != None:
                                 return steps[i]
                         else:
                             return steps[i]
             if fully_defined:
                 raise Exception(
-                    f'No point found in steps with all of c x z b defined')
+                    f'No point found in steps with all of x y z b defined')
             if not fully_defined:
                 raise Exception(f'No point found in steps')
 
